@@ -1,7 +1,6 @@
 *.iml
 .gradle
 /local.properties
-/.idea/codeStyles
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
@@ -14,5 +13,3 @@
 .externalNativeBuild
 .cxx
 local.properties
-/.idea/
-.idea/workspace.xml
