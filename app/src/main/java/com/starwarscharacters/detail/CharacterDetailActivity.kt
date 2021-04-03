@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.starwarscharacters.R
 
-class CharacterDetailActivity : AppCompatActivity() {
+class CharacterDetailActivity : AppCompatActivity(), CharacterDetailScreen{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character_detail)

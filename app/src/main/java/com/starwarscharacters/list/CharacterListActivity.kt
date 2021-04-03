@@ -8,7 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.starwarscharacters.R
 
-class CharacterListActivity : AppCompatActivity() {
+class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
