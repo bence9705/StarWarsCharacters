@@ -30,12 +30,14 @@ env:
 sudo: required
 
 before_script:
+  - chmod -x gradlew
   - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a -s "768x1280"
   - emulator -avd test -no-audio -no-window &
   - adb wait-for-device
   - adb shell input keyevent 82 &
 
-script: ./gradlew :app:build
+script:
+  - ./gradlew clean build
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
