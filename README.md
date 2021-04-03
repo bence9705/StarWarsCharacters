@@ -1,1 +1,2 @@
 # StarWarsCharacters
+Mobilszoftver laboratórium
