@@ -1,4 +1,5 @@
 language: android
+dist: trusty
 android:
   components:
     - build-tools-28.0.3
@@ -14,10 +15,12 @@ android:
     - addon-google_apis-google-28
     - sys-img-armeabi-v7a-android-21
   licenses:
-    - android-sdk-license-.+
-    - '.+'
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 
 before_install:
+  - chmod -x gradlew
   - yes | sdkmanager "platforms;android-28"
 
 env:
@@ -34,3 +37,12 @@ before_script:
 
 script:
   - chmod +x ./gradlew build connectedCheck
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
