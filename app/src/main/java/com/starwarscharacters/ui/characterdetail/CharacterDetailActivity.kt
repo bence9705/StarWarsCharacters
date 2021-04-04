@@ -11,7 +11,7 @@ class CharacterDetailActivity : AppCompatActivity(), CharacterDetailScreen{
         setContentView(R.layout.activity_character_detail)
     }
 
-    override fun showWeatherDetails(characterData: CharacterResult) {
+    override fun showCharacterDetails(characterData: CharacterResult) {
         TODO("Not yet implemented")
     }
 
