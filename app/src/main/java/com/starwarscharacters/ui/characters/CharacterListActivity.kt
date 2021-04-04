@@ -16,10 +16,8 @@ import javax.inject.Inject
 
 class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
 
-   // @Inject
-   // lateinit var characterListPresenter: CharacterListPresenter
     @Inject
-     lateinit var characterListPresenter: CharacterListPresenter;
+    lateinit var characterListPresenter: CharacterListPresenter;
     lateinit var characterAdapter: CharacterAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
