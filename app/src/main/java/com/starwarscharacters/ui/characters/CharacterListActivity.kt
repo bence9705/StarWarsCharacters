@@ -3,9 +3,11 @@ package com.starwarscharacters.ui.characters
 import android.os.Bundle
 import android.view.Menu
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.getInputField
+import com.afollestad.materialdialogs.input.input
 import com.starwarscharacters.R
 import com.starwarscharacters.model.Character
 import com.starwarscharacters.ui.characters.adapter.CharacterAdapter
@@ -20,9 +22,31 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            showAddCityDialog()
         }
+    }
+
+    private fun showAddCityDialog() {
+
+        MaterialDialog(this).show {
+            noAutoDismiss()
+            title(text = "Add City Name")
+            input()
+
+            positiveButton(text="Add") {
+                val characterName = it.getInputField().text.toString()
+                if (characterName.isNotEmpty()) {
+                    saveCharacter(Character())
+                    it.dismiss()
+                } else {
+                    it.getInputField().error = "Required"
+                }
+            }
+            negativeButton(text="Dismiss") {
+                it.dismiss()
+            }
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -32,11 +56,7 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
     }
 
     override fun showCharacters(characterList: List<Character>) {
-        TODO("Not yet implemented")
-    }
-
-    override fun showAbout() {
-        TODO("Not yet implemented")
+        characterAdapter.setCharacters(characterList);
     }
 
     override fun onStart() {
@@ -59,5 +79,15 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
         characterAdapter = CharacterAdapter(this);
         val rv: RecyclerView = findViewById(R.id.listCharacters)
         rv.adapter = characterAdapter;
+    }
+
+    fun saveCharacter(newCharacter: Character) {
+        Thread {
+
+            runOnUiThread {
+                characterAdapter.addCharacter(newCharacter)
+            }
+        }.start()
+
     }
 }

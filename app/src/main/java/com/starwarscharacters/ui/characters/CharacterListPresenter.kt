@@ -15,4 +15,5 @@ object CharacterListPresenter: Presenter<CharacterListScreen?>() {
     fun queryCharacters(context: Context){
 
     }
+
 }
