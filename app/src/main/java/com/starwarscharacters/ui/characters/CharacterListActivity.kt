@@ -9,21 +9,30 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.starwarscharacters.R
+import com.starwarscharacters.injector
 import com.starwarscharacters.model.Character
 import com.starwarscharacters.ui.characters.adapter.CharacterAdapter
+import javax.inject.Inject
 
 class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
 
+   // @Inject
+   // lateinit var characterListPresenter: CharacterListPresenter
+    @Inject
+     lateinit var characterListPresenter: CharacterListPresenter;
     lateinit var characterAdapter: CharacterAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        injector.inject(this)
+
         setSupportActionBar(findViewById(R.id.toolbar))
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
             showAddCityDialog()
         }
+//        characterListPresenter.queryCharacters(this);
     }
 
     private fun showAddCityDialog() {
@@ -61,18 +70,18 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
 
     override fun onStart() {
         super.onStart()
-        CharacterListPresenter.attachScreen(this)
+        characterListPresenter.attachScreen(this)
     }
 
     override fun onStop() {
-        CharacterListPresenter.detachScreen()
+        characterListPresenter.detachScreen()
         super.onStop()
     }
 
     override fun onResume() {
         super.onResume()
         initRecyclerView()
-        CharacterListPresenter.queryCharacters(this)
+        characterListPresenter.queryCharacters(this)
     }
 
     private fun initRecyclerView() {
