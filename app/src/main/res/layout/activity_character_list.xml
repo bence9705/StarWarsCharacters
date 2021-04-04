@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.characters.CharacterListActivity">
 
-
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,17 +20,14 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-<!--    <include layout="@layout/activity_character_list" />-->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listCharacters"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:scrollbars="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/listCharacters"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--        android:scrollbars="vertical"-->
+<!--        app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+<!--        />-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
