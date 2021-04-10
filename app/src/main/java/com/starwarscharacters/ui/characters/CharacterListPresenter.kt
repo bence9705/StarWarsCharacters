@@ -1,7 +1,7 @@
 package com.starwarscharacters.ui.characters
 
 import android.content.Context
-import com.starwarscharacters.Presenter
+import com.starwarscharacters.ui.Presenter
 
 object CharacterListPresenter: Presenter<CharacterListScreen?>() {
     override fun attachScreen(screen: CharacterListScreen?) {

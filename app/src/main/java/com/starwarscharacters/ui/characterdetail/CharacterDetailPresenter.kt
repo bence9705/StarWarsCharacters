@@ -1,6 +1,6 @@
 package com.starwarscharacters.ui.characterdetail
 
-import com.starwarscharacters.Presenter
+import com.starwarscharacters.ui.Presenter
 
 object CharacterDetailPresenter: Presenter<CharacterDetailScreen?>() {
 
