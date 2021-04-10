@@ -1,4 +1,4 @@
-package com.starwarscharacters
+package com.starwarscharacters.ui
 
 abstract class Presenter<S> {
     protected var screen: S? = null
