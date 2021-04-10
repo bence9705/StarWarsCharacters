@@ -1,6 +1,8 @@
 package com.starwarscharacters.ui
 
 import android.content.Context
+import com.starwarscharacters.ui.about.AboutPresenter
+import com.starwarscharacters.ui.characterdetail.CharacterDetailPresenter
 import dagger.Module
 import dagger.Provides
 import java.util.concurrent.Executor
@@ -17,4 +19,11 @@ class UIModule(private val context: Context) {
     @Singleton
     fun characterListPresenter() = CharacterListPresenter
 
+    @Provides
+    @Singleton
+    fun characterDetailPresenter() = CharacterDetailPresenter
+
+    @Provides
+    @Singleton
+    fun aboutPresenter() = AboutPresenter
 }

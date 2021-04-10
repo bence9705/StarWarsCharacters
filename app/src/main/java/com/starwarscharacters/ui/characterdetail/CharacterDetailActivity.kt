@@ -3,34 +3,42 @@ package com.starwarscharacters.ui.characterdetail
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.starwarscharacters.R
+import com.starwarscharacters.injector
 import com.starwarscharacters.model.CharacterResult
+import javax.inject.Inject
 
 class CharacterDetailActivity : AppCompatActivity(), CharacterDetailScreen{
+
+    @Inject
+    lateinit var characterDetailPresenter: CharacterDetailPresenter;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character_detail)
+        injector.inject(this);
+
     }
 
     override fun showCharacterDetails(characterData: CharacterResult) {
-        TODO("Not yet implemented")
+        //TODOO("Not yet implemented")
     }
 
     override fun showError(errorMsg: String) {
-        TODO("Not yet implemented")
+        //TODOO("Not yet implemented")
     }
 
     override fun onStart() {
         super.onStart()
-        CharacterDetailPresenter.attachScreen(this)
+        characterDetailPresenter.attachScreen(this)
     }
 
     override fun onStop() {
-        CharacterDetailPresenter.detachScreen()
+        characterDetailPresenter.detachScreen()
         super.onStop()
     }
 
     override fun onResume() {
         super.onResume()
-        CharacterDetailPresenter.queryCharacterDeatil(1);
+        characterDetailPresenter.queryCharacterDeatil(1);
     }
 }
