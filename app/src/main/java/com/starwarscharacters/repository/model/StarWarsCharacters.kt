@@ -1,3 +1,4 @@
 package com.starwarscharacters.repository.model
 
-data class StarWarsCharacters(val message: String?, val total_records: Number?, val total_pages: Number?, val previous: String?, val next: String?, val results: List<StarWarsCharactersResult>?)
+data class StarWarsCharacters(var message: String?, var total_records: Number?, var total_pages: Number?, var previous: String?, var next: String?, var results: List<StarWarsCharactersResult>?) {
+}
