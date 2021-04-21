@@ -9,6 +9,19 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    flavorDimensions "starwarscharacters"
+    productFlavors {
+        prod {
+            dimension "starwarscharacters"
+            applicationIdSuffix ".prod"
+        }
+        exp {
+            dimension "starwarscharacters"
+            applicationIdSuffix ".exp"
+        }
+    }
+
+
     defaultConfig {
         applicationId "com.starwarscharacters"
         minSdkVersion 21
