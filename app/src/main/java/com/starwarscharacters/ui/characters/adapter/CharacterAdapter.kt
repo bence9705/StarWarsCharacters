@@ -9,13 +9,15 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.starwarscharacters.R
 import kotlinx.android.synthetic.main.character_row.view.*
-import com.starwarscharacters.model.Character
+import com.starwarscharacters.repository.model.CharacterProperties
+import com.starwarscharacters.repository.model.StarWarsCharacters
 import com.starwarscharacters.ui.characterdetail.CharacterDetailActivity
 
 class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.ViewHolder> {
 
     val context: Context
-    var characterList = mutableListOf<Character>()
+    var characterList = mutableListOf<StarWarsCharacters>()
+    lateinit var characters: StarWarsCharacters
 
     constructor(context: Context) {
         this.context = context
@@ -34,8 +36,10 @@ class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.ViewHolder> {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val character = characterList[position]
-        holder.tvCharacterName.text = character.name
+//        val character = characterList[position]
+        val character = characters.results?.get(position)
+
+        holder.tvCharacterName.text = character?.name
 
         holder.btnDelete.setOnClickListener {
             removeCharacter(holder.adapterPosition)
@@ -43,7 +47,7 @@ class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.ViewHolder> {
 
         holder.cardView.setOnClickListener {
             val intent = Intent(context, CharacterDetailActivity::class.java)
-            intent.putExtra("CHARACTER_ID", character.characterId)
+            intent.putExtra("CHARACTER_ID", character?.uid)
             context.startActivity(intent)
         }
     }

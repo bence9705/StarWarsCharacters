@@ -4,7 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.starwarscharacters.R
 import com.starwarscharacters.injector
-import com.starwarscharacters.model.CharacterResult
+import com.starwarscharacters.repository.model.CharacterProperties
+import com.starwarscharacters.repository.model.StarWarsCharactersResult
 import javax.inject.Inject
 
 class CharacterDetailActivity : AppCompatActivity(), CharacterDetailScreen{
@@ -19,7 +20,7 @@ class CharacterDetailActivity : AppCompatActivity(), CharacterDetailScreen{
 
     }
 
-    override fun showCharacterDetails(characterData: CharacterResult) {
+    override fun showCharacterDetails(characterData: CharacterProperties) {
         //TODOO("Not yet implemented")
     }
 

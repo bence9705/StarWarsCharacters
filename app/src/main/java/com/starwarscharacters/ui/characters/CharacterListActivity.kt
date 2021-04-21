@@ -11,7 +11,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.GsonBuilder
 import com.starwarscharacters.R
 import com.starwarscharacters.injector
-import com.starwarscharacters.model.Character
 import com.starwarscharacters.repository.model.StarWarsCharacter
 import com.starwarscharacters.repository.model.StarWarsCharacters
 import com.starwarscharacters.repository.network.StarWarsAPI
@@ -43,6 +42,10 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
             showAddCityDialog()
         }
 //        characterListPresenter.queryCharacters(this);
+    }
+
+    override fun showCharacters() {
+
     }
 
     override fun loadCharacters() {
@@ -125,7 +128,7 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
             positiveButton(text = "Add") {
                 val characterName = it.getInputField().text.toString()
                 if (characterName.isNotEmpty()) {
-                    saveCharacter(Character())
+//                    saveCharacter(Character())
                     it.dismiss()
                 } else {
                     it.getInputField().error = "Required"
@@ -144,9 +147,9 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
         return true
     }
 
-    override fun showCharacters(characterList: List<Character>) {
-        characterAdapter.setCharacters(characterList);
-    }
+//    override fun showCharacters(characterList: List<Character>) {
+////        characterAdapter.setCharacters(characterList);
+//    }
 
     override fun onStart() {
         super.onStart()
