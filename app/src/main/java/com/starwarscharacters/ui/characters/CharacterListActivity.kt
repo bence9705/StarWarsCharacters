@@ -46,6 +46,8 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
     }
 
     override fun loadCharacters() {
+//        var starWarsCharacters=StarWarsCharacters("test","test", 0, 0,)
+        var starWarsCharacters:StarWarsCharacters?
 
         val gson = GsonBuilder()
             .setLenient()
@@ -69,12 +71,17 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
                 call: Call<StarWarsCharacters>,
                 response: Response<StarWarsCharacters>
             ) {
-                System.out.println(response.body()?.results?.get(0)?.toString())
+                val swCharacters = StarWarsCharacters(response.body()?.message,response.body()?.total_records,response.body()?.total_pages,response.body()?.previous,response.body()?.next,response.body()?.results)
+
+                starWarsCharacters = swCharacters
+                System.out.println(starWarsCharacters)
             }
         })
     }
 
     fun loadCharacter() {
+
+        var starWarsCharacter: StarWarsCharacter? = null
 
         val gson = GsonBuilder()
             .setLenient()
@@ -99,6 +106,9 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
                 response: Response<StarWarsCharacter>
             ) {
                 System.out.println(response.body()?.result?.description.toString())
+                val swCharacter = StarWarsCharacter(response.body()?.message,response.body()?.result)
+                starWarsCharacter = swCharacter
+                System.out.println(starWarsCharacter)
             }
         })
     }
