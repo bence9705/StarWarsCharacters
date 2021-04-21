@@ -2,17 +2,27 @@ package com.starwarscharacters.ui.characters
 
 import android.os.Bundle
 import android.view.Menu
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.gson.GsonBuilder
 import com.starwarscharacters.R
 import com.starwarscharacters.injector
 import com.starwarscharacters.model.Character
+import com.starwarscharacters.repository.model.StarWarsCharacter
+import com.starwarscharacters.repository.model.StarWarsCharacters
+import com.starwarscharacters.repository.network.StarWarsAPI
 import com.starwarscharacters.ui.characters.adapter.CharacterAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
+
 
 class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
 
@@ -28,10 +38,72 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
+            loadCharacters()
+            loadCharacter()
             showAddCityDialog()
         }
 //        characterListPresenter.queryCharacters(this);
     }
+
+    override fun loadCharacters() {
+
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://www.swapi.tech/api/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+
+        val starWarsAPI = retrofit.create(StarWarsAPI::class.java)
+
+        val characters = starWarsAPI.getAll()
+
+        characters.enqueue(object : Callback<StarWarsCharacters> {
+            override fun onFailure(call: Call<StarWarsCharacters>, t: Throwable) {
+                System.out.println(t.message)
+            }
+
+            override fun onResponse(
+                call: Call<StarWarsCharacters>,
+                response: Response<StarWarsCharacters>
+            ) {
+                System.out.println(response.body()?.results?.get(0)?.toString())
+            }
+        })
+    }
+
+    fun loadCharacter() {
+
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://www.swapi.tech/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val starWarsAPI = retrofit.create(StarWarsAPI::class.java)
+
+        val characters = starWarsAPI.getById(1)
+
+        characters.enqueue(object : Callback<StarWarsCharacter> {
+            override fun onFailure(call: Call<StarWarsCharacter>, t: Throwable) {
+                System.out.println(t.message)
+            }
+
+            override fun onResponse(
+                call: Call<StarWarsCharacter>,
+                response: Response<StarWarsCharacter>
+            ) {
+                System.out.println(response.body()?.result?.description.toString())
+            }
+        })
+    }
+
+//        val characterById = starWarsAPI.getByIdAll()
 
     private fun showAddCityDialog() {
 
@@ -40,7 +112,7 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
             title(text = "Add City Name")
             input()
 
-            positiveButton(text="Add") {
+            positiveButton(text = "Add") {
                 val characterName = it.getInputField().text.toString()
                 if (characterName.isNotEmpty()) {
                     saveCharacter(Character())
@@ -49,7 +121,7 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
                     it.getInputField().error = "Required"
                 }
             }
-            negativeButton(text="Dismiss") {
+            negativeButton(text = "Dismiss") {
                 it.dismiss()
             }
         }
