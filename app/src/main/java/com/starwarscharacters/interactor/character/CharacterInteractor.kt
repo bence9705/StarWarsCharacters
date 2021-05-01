@@ -36,7 +36,7 @@ class CharacterInteractor @Inject constructor(private var starWarsAPI: StarWarsA
                 call: Call<StarWarsCharacters>,
                 response: Response<StarWarsCharacters>
             ) {
-                val swCharacters = StarWarsCharacters(response.body()?.message,response.body()?.total_records,response.body()?.total_pages,response.body()?.previous,response.body()?.next,response.body()?.results)
+                val swCharacters = StarWarsCharacters(response.body()?.count,response.body()?.next,response.body()?.previous,response.body()?.results)
                 starWarsCharacters = swCharacters
                 System.out.println(starWarsCharacters)
 
@@ -67,7 +67,7 @@ class CharacterInteractor @Inject constructor(private var starWarsAPI: StarWarsA
                 call: Call<StarWarsCharacter>,
                 response: Response<StarWarsCharacter>
             ) {
-                val swCharacter = StarWarsCharacter(response.body()?.message,response.body()?.result)
+                val swCharacter = StarWarsCharacter(response.body()?.name,response.body()?.height,response.body()?.mass,response.body()?.hair_color,response.body()?.skin_color,response.body()?.eye_color,response.body()?.birth_year,response.body()?.gender,response.body()?.homeworld,response.body()?.films,response.body()?.species,response.body()?.vehicles,response.body()?.starships,response.body()?.created,response.body()?.edited,response.body()?.url)
                 starWarsCharacter = swCharacter
                 System.out.println(starWarsCharacter)
             }

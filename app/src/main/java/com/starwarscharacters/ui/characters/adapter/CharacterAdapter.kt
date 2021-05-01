@@ -47,7 +47,7 @@ class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.ViewHolder> {
 
         holder.cardView.setOnClickListener {
             val intent = Intent(context, CharacterDetailActivity::class.java)
-            intent.putExtra("CHARACTER_ID", character?.uid)
+            intent.putExtra("CHARACTER_ID", character?.url)
             context.startActivity(intent)
         }
     }
