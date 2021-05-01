@@ -57,7 +57,8 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
             .create()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://www.swapi.tech/api/")
+//            .baseUrl("https://www.swapi.tech/api/")
+            .baseUrl("https://swapi.dev/api/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
@@ -67,6 +68,7 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
 
         characters.enqueue(object : Callback<StarWarsCharacters> {
             override fun onFailure(call: Call<StarWarsCharacters>, t: Throwable) {
+                System.out.println("kebab1")
                 System.out.println(t.message)
             }
 
@@ -74,9 +76,10 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
                 call: Call<StarWarsCharacters>,
                 response: Response<StarWarsCharacters>
             ) {
-                val swCharacters = StarWarsCharacters(response.body()?.message,response.body()?.total_records,response.body()?.total_pages,response.body()?.previous,response.body()?.next,response.body()?.results)
+                val swCharacters = StarWarsCharacters(response.body()?.count,response.body()?.next,response.body()?.previous,response.body()?.results)
 
                 starWarsCharacters = swCharacters
+                System.out.println("kebab2")
                 System.out.println(starWarsCharacters)
             }
         })
@@ -91,7 +94,8 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
             .create()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://www.swapi.tech/api/")
+//            .baseUrl("https://www.swapi.tech/api/")
+            .baseUrl("https://swapi.dev/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -101,6 +105,7 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
 
         characters.enqueue(object : Callback<StarWarsCharacter> {
             override fun onFailure(call: Call<StarWarsCharacter>, t: Throwable) {
+                System.out.println("kebab3")
                 System.out.println(t.message)
             }
 
@@ -108,9 +113,11 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
                 call: Call<StarWarsCharacter>,
                 response: Response<StarWarsCharacter>
             ) {
-                System.out.println(response.body()?.result?.description.toString())
-                val swCharacter = StarWarsCharacter(response.body()?.message,response.body()?.result)
+                System.out.println("kebab4")
+                System.out.println(response.body()?.name.toString())
+                val swCharacter = StarWarsCharacter(response.body()?.name,response.body()?.height,response.body()?.mass,response.body()?.hair_color,response.body()?.skin_color,response.body()?.eye_color,response.body()?.birth_year,response.body()?.gender,response.body()?.homeworld,response.body()?.films,response.body()?.species,response.body()?.vehicles,response.body()?.starships,response.body()?.created,response.body()?.edited,response.body()?.url)
                 starWarsCharacter = swCharacter
+
                 System.out.println(starWarsCharacter)
             }
         })
