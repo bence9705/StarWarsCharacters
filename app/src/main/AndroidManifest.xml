@@ -24,6 +24,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.starwarscharacters.ui.characterdetail.CharacterDetailActivity"
+            android:label="StarWarsCharacterDetail"
+            android:theme="@style/Theme.StarWarsCharacters.NoActionBar">
+
+        </activity>
+        <activity
+            android:name="com.starwarscharacters.ui.about.AboutActivity"
+            android:label="About"
+            android:theme="@style/Theme.StarWarsCharacters.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>
