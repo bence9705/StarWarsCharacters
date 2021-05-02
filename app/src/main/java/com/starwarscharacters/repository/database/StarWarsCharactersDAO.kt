@@ -1,5 +1,6 @@
 package com.starwarscharacters.repository.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.starwarscharacters.repository.model.StarWarsCharactersEntity
 
@@ -8,8 +9,8 @@ interface StarWarsCharactersDAO {
     @Query("SELECT * FROM characters")
     fun getAllCharacters(): List<StarWarsCharactersEntity>
 
-    @Query("SELECT * FROM characters WHERE characterId = :id")
-    fun getCharacterById(id: Long) : StarWarsCharactersEntity
+    @Query("SELECT * FROM characters")
+    fun getAllCharactersForTest(): LiveData<List<StarWarsCharactersEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCharacter(character: StarWarsCharactersEntity): Long
@@ -17,9 +18,4 @@ interface StarWarsCharactersDAO {
     @Delete
     fun deleteCharacter(character: StarWarsCharactersEntity)
 
-    @Update
-    fun updateCharacter(character: StarWarsCharactersEntity)
-
-    @Query("DELETE FROM characters WHERE characterId = :userId")
-    fun deleteByCharacterId(userId: Long)
 }
