@@ -4,13 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.starwarscharacters.repository.model.CharacterProperties
-import com.starwarscharacters.repository.model.CharacterPropertiesEntity
+import com.starwarscharacters.repository.model.StarWarsCharactersEntity
 
-@Database(entities = [CharacterPropertiesEntity::class], version = 1)
+@Database(entities = [StarWarsCharactersEntity::class], version = 1)
 abstract class AppDatabase: RoomDatabase() {
 
-    abstract fun characterDao(): CharacterDAO
+    abstract fun starWarsCharacterDao(): StarWarsCharactersDAO
 
     companion object {
         @Volatile
@@ -23,6 +22,7 @@ abstract class AppDatabase: RoomDatabase() {
                     AppDatabase::class.java, "star_wars_database"
                 )
                     .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
                     .build()
                     .also { INSTANCE = it }
             }

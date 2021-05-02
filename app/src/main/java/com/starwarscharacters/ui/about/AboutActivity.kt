@@ -20,7 +20,7 @@ class AboutActivity : AppCompatActivity(), AboutScreen {
     }
 
     override fun showAboutDescription() {
-        //TODOO("Not yet implemented")
+
         aboutPresenter.attachScreen(this);
     }
 }

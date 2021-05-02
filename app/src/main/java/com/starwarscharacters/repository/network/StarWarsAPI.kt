@@ -1,8 +1,8 @@
 package com.starwarscharacters.repository.network
 
 import com.starwarscharacters.repository.model.CharacterProperties
-import com.starwarscharacters.repository.model.StarWarsCharacter
 import com.starwarscharacters.repository.model.StarWarsCharacters
+import com.starwarscharacters.repository.model.StarWarsCharactersResult
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -13,11 +13,11 @@ interface StarWarsAPI {
     fun getAll():Call<StarWarsCharacters>
 
     @POST("people")
-    fun create(@Body body: CharacterProperties):Call<StarWarsCharacter>
+    fun create(@Body body: CharacterProperties):Call<StarWarsCharactersResult>
 
     @GET("people/{id}")
-    fun getById(@Path("id") id: Number?):Call<StarWarsCharacter>
+    fun getById(@Path("id") id: Number?):Call<StarWarsCharactersResult>
 
     @DELETE("delete/{id}")
-    fun delete(@Path("id") id: Number?):Call<StarWarsCharacter>
+    fun delete(@Path("id") id: Number?):Call<StarWarsCharactersResult>
 }
