@@ -7,24 +7,27 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.starwarscharacters.getOrAwaitValue
 import com.starwarscharacters.repository.model.StarWarsCharactersEntity
-import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlinx.coroutines.test.runBlockingTest
 import com.google.common.truth.Truth.assertThat
+import com.starwarscharacters.mock.MockStarWarsAPI
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
+import org.mockito.Mock
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class StarWarsCharactersDAOTest {
+class StarWarsCharactersTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
+    @Mock
+    private lateinit var starWarsAPI: MockStarWarsAPI
 
     private lateinit var database: AppDatabase
     private lateinit var dao: StarWarsCharactersDAO
@@ -37,6 +40,16 @@ class StarWarsCharactersDAOTest {
         ).allowMainThreadQueries()
             .build()
         dao = database.starWarsCharacterDao()
+
+//        val gson = GsonBuilder()
+//            .setLenient()
+//            .create()
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("https://swapi.dev/api/")
+//            .addConverterFactory(GsonConverterFactory.create(gson))
+//            .build()
+//        starWarsAPI = retrofit.create(MockStarWarsAPI::class.java)
+        starWarsAPI = MockStarWarsAPI()
     }
 
     @After
@@ -138,5 +151,46 @@ class StarWarsCharactersDAOTest {
         assertThat(allStarWarsCharactersEntity[0].birth_year == "unkown")
         assertThat(allStarWarsCharactersEntity[0].gender == "male")
         assertThat(allStarWarsCharactersEntity[0].homeworld == "unkown")
+    }
+
+    @Test
+    fun observeStarWarsApiGetAll() = runBlockingTest {
+        val apiCall = starWarsAPI.getAll()
+
+        val response = apiCall.execute()
+        assertThat(response.isSuccessful).isTrue()
+
+        assertThat(response.body()?.results?.size).isEqualTo(3)
+
+        assertThat(response.body()?.results?.get(0)?.name).isEqualTo("Yoda")
+        assertThat(response.body()?.results?.get(0)?.height == "50")
+        assertThat(response.body()?.results?.get(0)?.mass == "30")
+        assertThat(response.body()?.results?.get(0)?.hair_color == "white")
+        assertThat(response.body()?.results?.get(0)?.skin_color == "green")
+        assertThat(response.body()?.results?.get(0)?.eye_color == "brown")
+        assertThat(response.body()?.results?.get(0)?.birth_year == "unkown")
+        assertThat(response.body()?.results?.get(0)?.gender == "male")
+        assertThat(response.body()?.results?.get(0)?.homeworld == "unkown")
+
+        assertThat(response.body()?.results?.get(1)?.name).isEqualTo("Obi")
+        assertThat(response.body()?.results?.get(1)?.height == "180")
+        assertThat(response.body()?.results?.get(1)?.mass == "80")
+        assertThat(response.body()?.results?.get(1)?.hair_color == "white")
+        assertThat(response.body()?.results?.get(1)?.skin_color == "green")
+        assertThat(response.body()?.results?.get(1)?.eye_color == "brown")
+        assertThat(response.body()?.results?.get(1)?.birth_year == "unkown")
+        assertThat(response.body()?.results?.get(1)?.gender == "male")
+        assertThat(response.body()?.results?.get(1)?.homeworld == "unkown")
+
+        assertThat(response.body()?.results?.get(2)?.name).isEqualTo("R2D2")
+        assertThat(response.body()?.results?.get(2)?.height == "80")
+        assertThat(response.body()?.results?.get(2)?.mass == "60")
+        assertThat(response.body()?.results?.get(2)?.hair_color == "white")
+        assertThat(response.body()?.results?.get(2)?.skin_color == "green")
+        assertThat(response.body()?.results?.get(2)?.eye_color == "brown")
+        assertThat(response.body()?.results?.get(2)?.birth_year == "unkown")
+        assertThat(response.body()?.results?.get(2)?.gender == "male")
+        assertThat(response.body()?.results?.get(2)?.homeworld == "unkown")
+
     }
 }
