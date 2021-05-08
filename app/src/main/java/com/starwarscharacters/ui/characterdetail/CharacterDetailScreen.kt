@@ -1,8 +1,7 @@
 package com.starwarscharacters.ui.characterdetail
 
-import com.starwarscharacters.model.CharacterResult
+import com.starwarscharacters.repository.model.CharacterProperties
 
 interface CharacterDetailScreen {
-    fun showCharacterDetails(characterData: CharacterResult)
     fun showError(errorMsg: String)
 }

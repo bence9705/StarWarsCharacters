@@ -1,18 +1,22 @@
 package com.starwarscharacters.ui.characters
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.input.getInputField
-import com.afollestad.materialdialogs.input.input
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.starwarscharacters.R
 import com.starwarscharacters.injector
-import com.starwarscharacters.model.Character
+import com.starwarscharacters.repository.model.StarWarsCharactersEntity
+import com.starwarscharacters.ui.about.AboutActivity
 import com.starwarscharacters.ui.characters.adapter.CharacterAdapter
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.create_character.view.*
 import javax.inject.Inject
+
 
 class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
 
@@ -28,42 +32,56 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            showAddCityDialog()
+            showAddCharacterDialog()
+            characterAdapter.notifyDataSetChanged()
         }
-//        characterListPresenter.queryCharacters(this);
     }
 
-    private fun showAddCityDialog() {
+    override fun showCharacters(characters: List<StarWarsCharactersEntity>) {
+        characterAdapter.setCharacters(characters)
+    }
 
-        MaterialDialog(this).show {
-            noAutoDismiss()
-            title(text = "Add City Name")
-            input()
+    private fun showAddCharacterDialog() {
 
-            positiveButton(text="Add") {
-                val characterName = it.getInputField().text.toString()
-                if (characterName.isNotEmpty()) {
-                    saveCharacter(Character())
-                    it.dismiss()
-                } else {
-                    it.getInputField().error = "Required"
-                }
-            }
-            negativeButton(text="Dismiss") {
-                it.dismiss()
-            }
+    val mDialogView = LayoutInflater.from(this).inflate(R.layout.create_character, null)
+        val mBuilder = AlertDialog.Builder(this).setView(mDialogView).setTitle("Create New Character!")
+        val mAlertDialog = mBuilder.show()
+
+        mDialogView.saveButton.setOnClickListener{
+            mAlertDialog.dismiss()
+            val name = mDialogView.name.text.toString()
+            val height = mDialogView.characterHeight.text.toString()
+            val mass = mDialogView.mass.text.toString()
+            val hair_color = mDialogView.hair_color.text.toString()
+            val skin_color = mDialogView.skin_color.text.toString()
+            val eye_color = mDialogView.eye_color.text.toString()
+            val birth_year = mDialogView.birth_year.text.toString()
+            val gender = mDialogView.gender.text.toString()
+            val homeworld = mDialogView.homeworld.text.toString()
+
+            characterAdapter.addCharacter(StarWarsCharactersEntity(null,name,height,mass,hair_color,skin_color,eye_color,birth_year,gender,homeworld,null,null,null))
+        }
+
+        mDialogView.cancelButton.setOnClickListener{
+            mAlertDialog.dismiss()
         }
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
-    override fun showCharacters(characterList: List<Character>) {
-        characterAdapter.setCharacters(characterList);
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_about -> {
+                val intent = Intent(this, AboutActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onStart() {
@@ -78,23 +96,14 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
 
     override fun onResume() {
         super.onResume()
-        initRecyclerView()
         characterListPresenter.queryCharacters(this)
+        initRecyclerView()
+        characterAdapter.notifyDataSetChanged()
     }
 
     private fun initRecyclerView() {
         characterAdapter = CharacterAdapter(this);
-        val rv: RecyclerView = findViewById(R.id.listCharacters)
-        rv.adapter = characterAdapter;
+        charactersRecyclerView.adapter = characterAdapter
     }
 
-    fun saveCharacter(newCharacter: Character) {
-        Thread {
-
-            runOnUiThread {
-                characterAdapter.addCharacter(newCharacter)
-            }
-        }.start()
-
-    }
 }

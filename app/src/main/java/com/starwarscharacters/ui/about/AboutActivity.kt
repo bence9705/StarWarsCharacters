@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.starwarscharacters.R
 import com.starwarscharacters.injector
-import com.starwarscharacters.model.CharacterResult
 import com.starwarscharacters.ui.characterdetail.CharacterDetailPresenter
 import com.starwarscharacters.ui.characterdetail.CharacterDetailScreen
 import javax.inject.Inject
@@ -21,7 +20,7 @@ class AboutActivity : AppCompatActivity(), AboutScreen {
     }
 
     override fun showAboutDescription() {
-        //TODOO("Not yet implemented")
+
         aboutPresenter.attachScreen(this);
     }
 }

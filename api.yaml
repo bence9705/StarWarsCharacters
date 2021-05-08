@@ -1,0 +1,191 @@
+swagger: "2.0"
+info:
+  description: "Mobilszoftver laboratórium házifeladat API leírása."
+  version: "1.0.0"
+  title: "Star Wars Characters REST Server API"
+host: "www.swapi.tech"
+basePath: "/api"
+tags:
+- name: "people"
+  description: "Character related operations."
+
+schemes:
+- "https"
+paths:
+  /people:
+    get:
+      tags:
+      - "people"
+      summary: "Returns a list from StarWarsCharacters"
+      operationId: "GetStarWarsCharacters"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+              $ref: "#/definitions/StarWarsCharacters"
+    post:
+      tags:
+      - "people"
+      summary: "Creates a new StarWarsCharacter"
+      operationId: "CreateStarWarsCharacter"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "The StarWarsCharacter to create"
+        required: true
+        schema:
+          $ref: "#/definitions/CharacterProperties"
+      responses:
+        201:
+          description: "Star Wars Character succesfully created."
+        409:
+          description: "ID already taken"
+  /people/{Id}:
+    get:
+      tags:
+      - "people"
+      summary: "Find a Character by its ID"
+      operationId: "GetStarWarsCharacter"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Id"
+        in: "path"
+        description: "ID of the StarWarsCharacter to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/StarWarsCharacter"
+        404:
+          description: "Star Wars Character not found"
+    delete:
+      tags:
+      - "people"
+      summary: "Deletes a Character"
+      operationId: "DeleteStarWarsCharacter"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Id"
+        in: "path"
+        description: "StarWarsCharacter id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "The Character was deleted (od didn't even exist)."
+
+definitions:
+  StarWarsCharacters:
+    type: "object"
+    properties:
+      message:
+        type: "string"
+        example: "ok"
+      total_records:
+        type: "integer"
+        format: "int64"
+        example: 82
+      total_pages:
+        type: "integer"
+        format: "int64"
+        example: 9
+      previous:
+        type: "string"
+        example: "null"
+      next:
+        type: "string"
+        example: "https://www.swapi.tech/api/people?page=2&limit=10"
+      results:
+        type: "array"
+        items:
+          $ref: "#/definitions/StarWarsCharactersResult"
+  StarWarsCharactersResult:
+    type: "object"
+    properties:
+      uid:
+        type: "string"
+        example: "1"
+      name:
+        type: "string"
+        example: "Luke Skywalker"
+      url:
+        type: "string"
+        example: "https://www.swapi.tech/api/people/1"
+  StarWarsCharacter:
+    type: "object"
+    properties:
+      message:
+        type: "string"
+        example: "ok"
+      result:
+          $ref: "#/definitions/StarWarsCharacterResult"
+  StarWarsCharacterResult:
+    type: "object"
+    properties:
+      description:
+        type: "string"
+        example: "A preson within the Star Wars universe"
+      _id:
+        type: "string"
+        example: "5f63a36eee9fd7000499be42"
+      uid:
+        type: "integer"
+        format: "int64"
+        example: 1
+      __v:
+        type: "integer"
+        format: "int64"
+        example: 0
+      properties:
+        $ref: "#/definitions/CharacterProperties"
+  CharacterProperties:
+    type: "object"
+    properties:
+      height:
+        type: "string"
+        example: "172"
+      mass:
+        type: "string"
+        example: "77"
+      hair_color:
+        type: "string"
+        example: "blond"
+      skin_color:
+        type: "string"
+        example: "fair"
+      eye_color:
+        type: "string"
+        example: "blue"
+      birth_year:
+        type: "string"
+        example: "19BBY"
+      gender:
+        type: "string"
+        example: "male"
+      created:
+        type: "string"
+        example: "2021-04-21T12:17:48.262Z"
+      edited:
+        type: "string"
+        example: "2021-04-21T12:17:48.262Z"
+      name:
+        type: "string"
+        example: "Luke Skywalker"
+      homeworld:
+        type: "string"
+        example: "https://www.swapi.tech/api/planets/1"
+      url:
+        type: "string"
+        example: "https://www.swapi.tech/api/people/1"
