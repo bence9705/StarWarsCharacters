@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">StarWarsCharacters</string>
     <string name="action_about">about</string>
-    <string name="about_description">Welcome to the StarWarsCharacters application! You can get a lot of information about the characters from the Star Wars universe and you can odd you own characters. Hope you enjoy the app!</string>
+    <string name="about_description">Welcome to the StarWarsCharacters application! You can get a lot of information about the characters from the Star Wars universe and you can add your own characters. Hope you enjoy the app!</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

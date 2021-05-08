@@ -41,15 +41,16 @@ object CharacterListPresenter : Presenter<CharacterListScreen?>() {
             var characterList =
                 AppDatabase.getInstance(context).starWarsCharacterDao().getAllCharacters();
             if (characterList.size < 1) {
-                loadCharacters(context)
+                loadCharacters(context, characterList)
             }
         characterList =
             AppDatabase.getInstance(context).starWarsCharacterDao().getAllCharacters()
                 EventBus.publish(RxBusEvent.StarWarsCharactersEvent(characterList))
 
+
     }
 
-    fun loadCharacters(context: Context){
+    fun loadCharacters(context: Context, characterList: List<StarWarsCharactersEntity>){
                 val gson = GsonBuilder()
             .setLenient()
             .create()
@@ -59,7 +60,7 @@ object CharacterListPresenter : Presenter<CharacterListScreen?>() {
             .build()
         val starWarsAPI = retrofit.create(StarWarsAPI::class.java)
         var characterInteractor: CharacterInteractor = CharacterInteractor(starWarsAPI)
-        characterInteractor.getCharacters(context)
+        characterInteractor.getCharacters(context, characterList)
     }
 
 

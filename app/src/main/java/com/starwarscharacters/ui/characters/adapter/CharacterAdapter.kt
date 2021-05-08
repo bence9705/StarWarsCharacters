@@ -98,6 +98,7 @@ class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.ViewHolder> {
         characterListDBafterRemove.forEach(){
             println(it)
         }
+        notifyDataSetChanged()
     }
 
 }
