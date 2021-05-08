@@ -106,13 +106,4 @@ class CharacterListActivity : AppCompatActivity(), CharacterListScreen {
         charactersRecyclerView.adapter = characterAdapter
     }
 
-//    fun saveCharacter(newCharacter: StarWarsCharactersEntity) {
-//        Thread {
-//
-//            runOnUiThread {
-//                characterAdapter.addCharacter(newCharacter)
-//            }
-//        }.start()
-//
-//    }
 }

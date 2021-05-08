@@ -41,14 +41,6 @@ class StarWarsCharactersTest {
             .build()
         dao = database.starWarsCharacterDao()
 
-//        val gson = GsonBuilder()
-//            .setLenient()
-//            .create()
-//        val retrofit = Retrofit.Builder()
-//            .baseUrl("https://swapi.dev/api/")
-//            .addConverterFactory(GsonConverterFactory.create(gson))
-//            .build()
-//        starWarsAPI = retrofit.create(MockStarWarsAPI::class.java)
         starWarsAPI = MockStarWarsAPI()
     }
 

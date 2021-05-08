@@ -2,6 +2,8 @@ package com.starwarscharacters.interactor.character
 
 import android.content.Context
 import com.google.gson.GsonBuilder
+import com.starwarscharacters.events.EventBus
+import com.starwarscharacters.events.RxBusEvent
 import com.starwarscharacters.repository.database.AppDatabase
 import com.starwarscharacters.repository.model.CharacterProperties
 import com.starwarscharacters.repository.model.StarWarsCharacters
@@ -17,7 +19,7 @@ import javax.inject.Inject
 
 class CharacterInteractor @Inject constructor(private var starWarsAPI: StarWarsAPI) {
 
-    fun getCharacters(context: Context) {
+    fun getCharacters(context: Context, characterList: List<StarWarsCharactersEntity>) {
 
         var starWarsCharacters: StarWarsCharacters?
         val characters = starWarsAPI.getAll()
@@ -69,6 +71,9 @@ class CharacterInteractor @Inject constructor(private var starWarsAPI: StarWarsA
                         )
                     )
                 };
+                var characterList =
+                    AppDatabase.getInstance(context).starWarsCharacterDao().getAllCharacters()
+                EventBus.publish(RxBusEvent.StarWarsCharactersEvent(characterList))
             }
         })
     }
@@ -89,7 +94,6 @@ class CharacterInteractor @Inject constructor(private var starWarsAPI: StarWarsA
 
         character.enqueue(object : Callback<StarWarsCharactersResult> {
             override fun onFailure(call: Call<StarWarsCharactersResult>, t: Throwable) {
-                System.out.println(t.message)
             }
 
             override fun onResponse(
